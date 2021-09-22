@@ -28,7 +28,7 @@ class TakuCLI {
 
     await this.login();
     // this.getMessage();
-    this.sendMessage()
+    while (true) {await this.sendMessage()}
   }
 
   public async login() {
@@ -72,9 +72,10 @@ class TakuCLI {
   }
 
   public async sendMessage() {
-    const userMessage = await prompts(this.messageInput);
-    console.log("Sent message:", userMessage);
-    this.app.send(userMessage);
+    const {input} = await prompts(this.messageInput);
+    if (input == "!!quit") { process.exit(); }
+    console.log("Sent message:", input);
+    this.app.send(input);
   }
 }
 
