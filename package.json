@@ -5,7 +5,7 @@
   "main": "./src/main.ts",
   "scripts": {
     "prettify": "npx prettier --write \"./**/*.ts\" && npx prettier --write \"./**/*.json\"",
-    "taku": "ts-node ./src/main.ts"
+    "dev": "ts-node ./src/main.ts"
   },
   "author": "azur1s",
   "license": "ISC",

@@ -18,7 +18,7 @@ class Input {
     },
   ];
 
-  public async GetInput() {
+  public async getInput() {
     const login = await prompts(this.loginQuestion);
     this.username = login.username;
     this.password = login.password;
