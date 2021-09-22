@@ -13,7 +13,7 @@ class Input {
     {
       type: "password",
       name: "password",
-      message: "Password: ",
+      message: "Password:",
       alidate: (username: string) => (!username ? "Please enter password!" : true),
     },
   ];
