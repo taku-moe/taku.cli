@@ -4,6 +4,7 @@
   "description": "CLI version of taku!",
   "main": "main.ts",
   "scripts": {
+    "prettify": "npx prettier --write \"./**/*.ts\" && npx prettier --write \"./**/*.json\"",
     "test": "nodemon ./src/main.ts"
   },
   "author": "azur1s",

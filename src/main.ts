@@ -7,7 +7,7 @@ import Taku from "./taku";
 import Input from "./taku/input";
 import Login from "./taku/login";
 
-console.log( chalk.hex("#F90069") (`Welcome to taku.cli! ${version}`));
+console.log(chalk.hex("#F90069")(`Welcome to taku.cli! ${version}`));
 
 Input.GetInput();
 Login.Hi();
