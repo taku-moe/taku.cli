@@ -1,9 +1,12 @@
 const keypress = require("keypress");
 import { createTerminal, Terminal } from "terminal-kit";
+
+/**
+ * A crude IO interface for the terminal, uses keypress to read stdio
+ * and terminal-kit for terminal output
+ */
 export class InputOutputHandler {
-  private hideOutput: boolean = false;
   private term: Terminal = createTerminal();
-  private inputBuffer: string = "";
 
   constructor() {}
   private handleInput(ch: string, key: {}, hideOutput: boolean) {
@@ -37,27 +40,33 @@ export class InputOutputHandler {
     });
   }
 
-  private async sleep(msec: number) {
-    return new Promise((resolve) => setTimeout(resolve, msec));
-  }
-
-  public getHideOutput(): boolean {
-    return this.hideOutput;
-  }
-  public setHideOutput(value: boolean) {
-    this.hideOutput = value;
-  }
+  /**
+   * Gets the instance of this terminal
+   * @returns the instance of the terminal
+   */
   public getTerminal(): Terminal {
     return this.term;
   }
+
+  /**
+   * Replace the current terminal with a new one (usually this is not needed)
+   * @param value New terminal to replace the existing one
+   */
   public setTerminal(value: Terminal) {
     this.term = value;
   }
 
-  // TODO: Add color support
+  /**
+   * Prints a string to the terminal
+   * @param value The text to be printed
+   */
   public print(value: string) {
     this.term(value);
   }
+  /**
+   * Prints a string to the terminal and does newline after
+   * @param value The text to be printed
+   */
   public println(value: string) {
     this.term(value + "\n");
   }
