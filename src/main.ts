@@ -1,7 +1,8 @@
-import Taku from "taku.js";
+import { Client, IMessage } from "taku.js";
 // @ts-ignore
 import * as fetch from "node-fetch";
-import { InputOutputHandler } from "./taku/input";
+import { InputOutputHandler } from "./taku/ioHandler";
+import { UserInterfaceHandler } from "./taku/uiHandler";
 import { version } from "../package.json";
 
 class TakuCLI {
@@ -11,6 +12,7 @@ class TakuCLI {
   private authToken: string | undefined;
   private keepAlive: boolean = true;
   private ioHandler: InputOutputHandler = new InputOutputHandler();
+  private uiHandler: UserInterfaceHandler = new UserInterfaceHandler();
 
   // CLI Stuff
   public messageCount: number = 50;
@@ -25,24 +27,27 @@ class TakuCLI {
   ];
 
   public async run() {
+    // User login
+
     this.ioHandler.println(`Welcome to taku.cli! ${version}`);
     this.ioHandler.println(`The terminal size is ${this.ioHandler.getTerminal().width}, ${this.ioHandler.getTerminal().height}`);
 
     this.ioHandler.print("Username: ");
-    this.username = await this.ioHandler.uiInput(false);
-    this.ioHandler.print(`\n`);
+    this.username = await this.uiHandler.inputField(false);
+    this.ioHandler.println("");
 
     this.ioHandler.print("Password: ");
-    this.password = await this.ioHandler.uiInput(true);
-    this.ioHandler.print(`\n`);
+    this.password = await this.uiHandler.inputField(true);
+    this.ioHandler.println("");
 
     await this.login();
-    // this.getMessage();
-    // while (!this.keepAlive) {
-    //   await this.sendMessage();
+
+    // CLI
+
+    // while (this.keepAlive) {
+    //   this.ioHandler.print("Input: ");
+    //   await this.sendMessage(); 
     // }
-    this.ioHandler.print("Input: ");
-    await this.sendMessage();
     this.ioHandler.println("Logging off...");
     process.exit();
   }
@@ -68,7 +73,7 @@ class TakuCLI {
         process.exit();
       }
 
-      this.app = new Taku(this.authToken, false, "");
+      this.app = new Client(this.authToken, false, "");
       this.ioHandler.println("Welcome " + this.username + " to taku.cli!");
     } catch (error) {
       this.ioHandler.println("Error while logging in! " + error);
@@ -78,26 +83,21 @@ class TakuCLI {
   // for now, we are getting from @global
   public async getMessage() {
     this.ioHandler.println("Getting @global messages...");
-    try {
-      const response = await fetch(`https://backend.taku.moe/v1/message/@global/0/${this.messageCount}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: this.authToken,
-        },
-      });
-
-      this.messages = await response.json();
-    } catch (error) {
-      this.ioHandler.println("Error while getting messages!" + error);
-    }
+    
+    this.app.on("message", async (message: IMessage) => {
+      this.ioHandler.println(`${message.content}`);
+    });
   }
 
   public async sendMessage() {
-    let input = await this.ioHandler.uiInput();
+    let input = await this.uiHandler.inputField(false);
+
     if (input == "!!quit") {
       this.keepAlive = false;
+      this.ioHandler.println("");
+      return;
     }
+
     this.ioHandler.println(`\n${this.username}: ${input}`);
     this.app.send(input);
   }

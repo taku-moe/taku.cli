@@ -41,22 +41,6 @@ export class InputOutputHandler {
   }
 
   /**
-   * above function but fixed object issue somehow
-   * @param hideOutput Set to true if you want to hide the output with *
-   * @returns the input string
-  */
-  public async uiInput(hideOutput: boolean = false): Promise<string> {
-    return new Promise(async (resolve) => {
-        let input;
-        if (hideOutput) input = await this.term.inputField({echoChar: "*"}).promise;
-        else input = await this.term.inputField().promise;
-
-        if (input == undefined) { input = "" };
-        resolve(input);
-    });
-}
-
-  /**
    * Gets the instance of this terminal
    * @returns the instance of the terminal
    */
