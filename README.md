@@ -1,4 +1,4 @@
 # taku.cli
 Taku for people that like terminals  
 
-This is still in testing and may or may not work
+I'm deeply sorry for linux elitist out there who see this coded on node
