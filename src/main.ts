@@ -1,5 +1,4 @@
 import Taku from "taku.js";
-import chalk from "chalk";
 // @ts-ignore
 import * as fetch from "node-fetch";
 import { InputOutputHandler } from "./taku/input";
@@ -58,6 +57,7 @@ class TakuCLI {
       this.authToken = token;
       this.app = new Taku(this.authToken, false, "");
       this.ioHandler.println("Welcome " + this.username + " to taku.cli!");
+      console.log(this.username);
     } catch (error) {
       this.ioHandler.println("Error while logging in! " + error);
     }
