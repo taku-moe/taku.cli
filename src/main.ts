@@ -61,6 +61,13 @@ class TakuCLI {
       });
       const { token } = await response.json();
       this.authToken = token;
+
+      if (!this.authToken) {
+        this.ioHandler.println("Can't find authentication token, did you enter wrong username/password?");
+        this.ioHandler.println("Logging off...");
+        process.exit();
+      }
+
       this.app = new Taku(this.authToken, false, "");
       this.ioHandler.println("Welcome " + this.username + " to taku.cli!");
     } catch (error) {
