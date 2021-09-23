@@ -27,10 +27,14 @@ class TakuCLI {
   public async run() {
     this.ioHandler.println(`Welcome to taku.cli! ${version}`);
     this.ioHandler.println(`The terminal size is ${this.ioHandler.getTerminal().width}, ${this.ioHandler.getTerminal().height}`);
+
     this.ioHandler.print("Username: ");
-    this.username = await this.ioHandler.getInput(true);
+    this.username = await this.ioHandler.uiInput(false);
+    this.ioHandler.print(`\n`);
+
     this.ioHandler.print("Password: ");
-    this.password = await this.ioHandler.getInput(true, true);
+    this.password = await this.ioHandler.uiInput(true);
+    this.ioHandler.print(`\n`);
 
     await this.login();
     // this.getMessage();
@@ -57,7 +61,6 @@ class TakuCLI {
       this.authToken = token;
       this.app = new Taku(this.authToken, false, "");
       this.ioHandler.println("Welcome " + this.username + " to taku.cli!");
-      console.log(this.username);
     } catch (error) {
       this.ioHandler.println("Error while logging in! " + error);
     }
