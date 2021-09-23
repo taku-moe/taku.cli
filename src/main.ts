@@ -38,9 +38,11 @@ class TakuCLI {
 
     await this.login();
     // this.getMessage();
-    while (!this.keepAlive) {
-      await this.sendMessage();
-    }
+    // while (!this.keepAlive) {
+    //   await this.sendMessage();
+    // }
+    this.ioHandler.print("Input: ");
+    await this.sendMessage();
     this.ioHandler.println("Logging off...");
     process.exit();
   }
@@ -85,12 +87,12 @@ class TakuCLI {
   }
 
   public async sendMessage() {
-    // const { input } = await prompts(this.messageInput);
-    // if (input == "!!quit") {
-    //   this.keepAlive = false;
-    // }
-    // this.term(`${this.username}: `, input);
-    // this.app.send(input);
+    let input = await this.ioHandler.uiInput();
+    if (input == "!!quit") {
+      this.keepAlive = false;
+    }
+    this.ioHandler.println(`\n${this.username}: ${input}`);
+    this.app.send(input);
   }
 
   public handleInput(input: string) {}
