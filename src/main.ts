@@ -1,6 +1,6 @@
 // @ts-ignore
 import * as fetch from "node-fetch";
-import blessed, { line, message } from "blessed";
+import blessed from "blessed";
 import { timeStamp } from "console";
 import { Client, IMessage } from "taku.js";
 import { version } from "../package.json";
@@ -11,8 +11,6 @@ class takuCLI {
     private password: string | undefined;
     private auth: string | undefined;
     private client: any;
-
-    private logged: boolean = false;
 
     public mainColor = "red";
 
@@ -26,15 +24,17 @@ class takuCLI {
         });
 
         this.submitButton.on("press", async () => {
-            await this.login();
+            this.username = this.usernameInput.value;
+            this.password = this.passwordInput.value;
+            await this.login(this.username, this.password);
             await this.chat();
         });
     }
 
     // --- Taku Section ---
 
-    public async login() {
-        const body = { username: this.usernameInput.value, password: this.passwordInput.value };
+    public async login(username: string, password: string) {
+        const body = { username: username, password: password };
 
         try {
             const response = await fetch("https://backend.taku.moe/v1/login", {
@@ -52,22 +52,10 @@ class takuCLI {
                 process.exit(0);
             }
 
-            this.logged = true;
             this.client = new Client(this.auth, false, "");
-        } catch (error) {
-            this.logged = false;
+        } 
+        catch (error) {
         }
-    }
-
-    public async getLastMessage(auth: string, channel: string, load: number) {
-        const response = await fetch(`https://backend.taku.moe/v1/message/${channel}/0/${load}`, {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: auth,
-            },
-        });
-
-        return await response.json();
     }
 
     public async chat() {
@@ -76,17 +64,14 @@ class takuCLI {
 
         this.screen.append(this.input);
 
-        this.drawLog("Getting messages...");
+        // replace this when there's channel support
+        this.drawLog(`Welcome ${this.username} to taku.cli ${version}\nYou're currently in @global`);
 
-        this.client.on("message", async (message: IMessage) => {
+        this.client.on("message", async ( message: IMessage ) => {
             await this.drawMessage(message);
         });
 
         this.input.on("submit", async () => {
-            if (this.input.value == "::quit") {
-                process.exit(0);
-            }
-
             this.client.send(`${this.input.value}`);
             this.input.clearValue();
             this.input.focus();
@@ -260,7 +245,7 @@ class takuCLI {
 
     public drawMessage = async (message: IMessage) => {
         const user = await this.client.getUser(message.author_id);
-        const username = user?.username;
+        const username = user.username;
 
         let text = message.content;
         let links = message.attachments;
@@ -278,7 +263,7 @@ class takuCLI {
     };
 
     public drawLog = async (message: string) => {
-        this.chatBox.log(`{white-fg}${message}`);
+        this.chatBox.log(`{grey-fg}${message}`);
     };
 }
 
