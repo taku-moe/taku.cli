@@ -216,38 +216,32 @@ class takuCLI {
         top: 0,
         left: 0,
         width: "100%",
-        bottom: 3,
+        bottom: 1,
         shrink: true,
         tags: true,
         border: {
             type: "line",
-        },
-        style: {
-            scrollbar: {
-                bg: "${dimColor}",
-                fg: this.mainColor,
-            },
         },
     });
 
     input = blessed.textbox({
         mouse: true,
         shrink: true,
-        height: 3,
+        height: 1,
         width: "100%",
         bottom: 0,
         inputOnFocus: true,
-        border: {
-            type: "line",
-        },
         style: {
-            fg: "white",
+            fg: this.brightColor,
+            bg: this.dimColor,
+            focus: {
+                bg: this.mainColor,
+            }
         },
     });
 
     public drawMessage = async (message: IMessage) => {
-        const user = await this.client.getUser(message.author_id);
-        const username = user.username;
+        const username = ((await this.client.getUser(message.author_id)).username + "             ").slice(0, 12);
 
         let text = message.content;
         let links = message.attachments;
