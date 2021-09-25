@@ -1,25 +1,27 @@
 {
-  "name": "taku.cli",
-  "version": "1.0.2",
-  "description": "CLI version of taku!",
-  "main": "./src/main.ts",
-  "scripts": {
-    "prettify": "npx prettier --write \"./**/*.ts\" && npx prettier --write \"./**/*.json\"",
-    "dev": "ts-node ./src/main.ts"
-  },
-  "author": "azur1s",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node-fetch": "^3.0.3",
-    "@types/prompts": "^2.0.14",
-    "prompts": "^2.4.1",
-    "taku.js": "^1.0.4",
-    "typescript": "^4.4.3"
-  },
-  "dependencies": {
-    "@types/terminal-kit": "^1.28.4",
-    "keypress": "^0.2.1",
-    "node-fetch": "^2.6.2",
-    "terminal-kit": "^2.1.6"
-  }
+    "name": "taku.cli",
+    "version": "1.0.2",
+    "description": "CLI version of taku!",
+    "main": "./src/main.ts",
+    "scripts": {
+        "prettify": "npx prettier --write \"./**/*.ts\" && npx prettier --write \"./**/*.json\"",
+        "dev": "ts-node ./src/main.ts"
+    },
+    "author": "azur1s",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/blessed": "^0.1.19",
+        "@types/node-fetch": "^3.0.3",
+        "@types/prompts": "^2.0.14",
+        "prompts": "^2.4.1",
+        "taku.js": "^1.0.4",
+        "typescript": "^4.4.3"
+    },
+    "dependencies": {
+        "@types/terminal-kit": "^1.28.4",
+        "blessed": "^0.1.81",
+        "keypress": "^0.2.1",
+        "node-fetch": "^2.6.2",
+        "terminal-kit": "^2.1.6"
+    }
 }
