@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "blessed": "^0.1.81",
+        "fs": "^0.0.1-security",
         "keypress": "^0.2.1",
         "node-fetch": "^2.6.2"
     }

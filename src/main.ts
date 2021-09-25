@@ -1,9 +1,11 @@
 // @ts-ignore
 import * as fetch from "node-fetch";
+import fs from "fs";
 import blessed from "blessed";
 import { timeStamp } from "console";
 import { Client, IMessage } from "taku.js";
 import { version } from "../package.json";
+import {mainColor, dimColor, brightColor} from "./settings.taku.json";
 
 class takuCLI {
     // --- Main Section ---
@@ -12,7 +14,9 @@ class takuCLI {
     private auth: string | undefined;
     private client: any;
 
-    public mainColor = "red";
+    public mainColor = mainColor;
+    public dimColor = dimColor;
+    public brightColor = brightColor;
 
     public async run() {
         this.screen.append(this.authForm);
@@ -65,7 +69,7 @@ class takuCLI {
         this.screen.append(this.input);
 
         // replace this when there's channel support
-        this.drawLog(`Welcome ${this.username} to taku.cli ${version}\nYou're currently in @global`);
+        this.drawLog(`{${this.dimColor}-fg}Welcome ${this.username} to taku.cli ${version}\nYou're currently in @global`);
 
         this.client.on("message", async ( message: IMessage ) => {
             await this.drawMessage(message);
@@ -83,26 +87,26 @@ class takuCLI {
 
     // --- UI Section ---
 
-    screen = blessed.screen({ smartCSR: true });
+    screen = blessed.screen({
+        smartCSR: true,
+        title: `taku.cli ${version}`,
+    });
 
     // Login form
 
     authForm = blessed.form({
         keys: true,
-        left: "center",
         top: "center",
+        left: "center",
         width: 35,
-        height: 11,
+        height: 9,
         padding: {
             left: 1,
             right: 1,
-            top: 1,
-            bottom: 1,
         },
         border: {
             type: "line",
         },
-        bg: "black",
         content: "Login",
     });
 
@@ -114,7 +118,7 @@ class takuCLI {
         width: 12,
         content: "Tab to focus",
         style: {
-            fg: "grey",
+            fg: this.dimColor,
         },
     });
 
@@ -122,24 +126,23 @@ class takuCLI {
         parent: this.authForm,
         left: 0,
         top: 2,
-        width: 10,
-        content: "Username: ",
+        width: 9,
+        content: "Username:",
         style: { fg: "red" },
     });
 
     usernameInput = blessed.textbox({
         mouse: true,
-        shrink: true,
         inputOnFocus: true,
         parent: this.authForm,
         height: 1,
-        width: 15,
+        width: 21,
         name: "username",
-        left: 12,
+        right: 0,
         top: 2,
         style: {
-            fg: "white",
-            bg: "grey",
+            fg: this.brightColor,
+            bg: this.dimColor,
             focus: {
                 bg: this.mainColor,
             },
@@ -150,24 +153,23 @@ class takuCLI {
         parent: this.authForm,
         left: 0,
         top: 4,
-        width: 10,
-        content: "Password: ",
-        style: { fg: "red" },
+        width: 9,
+        content: "Password:",
+        style: { fg: this.mainColor },
     });
 
     passwordInput = blessed.textbox({
         mouse: true,
-        shrink: true,
         inputOnFocus: true,
         parent: this.authForm,
         height: 1,
-        width: 15,
+        width: 21,
         name: "password",
-        left: 12,
+        right: 0,
         top: 4,
         style: {
-            fg: "white",
-            bg: "grey",
+            fg: this.brightColor,
+            bg: this.dimColor,
             focus: {
                 bg: this.mainColor,
             },
@@ -185,7 +187,7 @@ class takuCLI {
             right: 1,
         },
         style: {
-            bg: "grey",
+            bg: this.dimColor,
             focus: {
                 bg: this.mainColor,
             },
@@ -204,7 +206,7 @@ class takuCLI {
         height: 1,
         content: `${version}`,
         style: {
-            fg: "grey",
+            fg: this.dimColor,
         },
     });
 
@@ -222,7 +224,7 @@ class takuCLI {
         },
         style: {
             scrollbar: {
-                bg: "grey",
+                bg: "${dimColor}",
                 fg: this.mainColor,
             },
         },
@@ -263,7 +265,7 @@ class takuCLI {
     };
 
     public drawLog = async (message: string) => {
-        this.chatBox.log(`{grey-fg}${message}`);
+        this.chatBox.log(message);
     };
 }
 
