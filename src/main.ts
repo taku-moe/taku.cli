@@ -128,7 +128,7 @@ class takuCLI {
         top: 2,
         width: 9,
         content: "Username:",
-        style: { fg: "red" },
+        style: { fg: this.mainColor },
     });
 
     usernameInput = blessed.textbox({
