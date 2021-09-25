@@ -21,7 +21,6 @@
         "@types/terminal-kit": "^1.28.4",
         "blessed": "^0.1.81",
         "keypress": "^0.2.1",
-        "node-fetch": "^2.6.2",
-        "terminal-kit": "^2.1.6"
+        "node-fetch": "^2.6.2"
     }
 }
