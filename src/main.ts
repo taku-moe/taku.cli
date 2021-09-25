@@ -46,7 +46,7 @@ class TakuCLI {
 
     // while (this.keepAlive) {
     //   this.ioHandler.print("Input: ");
-    //   await this.sendMessage(); 
+    //   await this.sendMessage();
     // }
     this.ioHandler.println("Logging off...");
     process.exit();
@@ -83,7 +83,7 @@ class TakuCLI {
   // for now, we are getting from @global
   public async getMessage() {
     this.ioHandler.println("Getting @global messages...");
-    
+
     this.app.on("message", async (message: IMessage) => {
       this.ioHandler.println(`${message.content}`);
     });
