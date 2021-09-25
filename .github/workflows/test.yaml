@@ -8,6 +8,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '14'
+      - name: Install pkg
+        run: npm install -g pkg
       - name: Install dependancies
         run: npm i
       - name: Compile Typescript
