@@ -1,7 +1,7 @@
 name: taku.cli
 on: [push, pull_request]
 jobs:
-  compile-sakuria:
+  compile-taku-cli:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
