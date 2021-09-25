@@ -1,0 +1,16 @@
+name: taku.cli
+on: [push, pull_request]
+jobs:
+  compile-sakuria:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '14'
+      - name: Install dependancies
+        run: npm i
+      - name: Compile Typescript
+        run: tsc
+      - name: Build app
+        run: pkg ./dist/src/main.js --compress Brotli -d
