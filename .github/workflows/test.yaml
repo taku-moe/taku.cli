@@ -15,4 +15,4 @@ jobs:
       - name: Compile Typescript
         run: tsc
       - name: Build app
-        run: pkg ./dist/src/main.js --compress Brotli -d
+        run: pkg ./dist/src/main.js --compress Brotli
