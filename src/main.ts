@@ -5,7 +5,7 @@ import blessed from "blessed";
 import { timeStamp } from "console";
 import { Client, IMessage } from "taku.js";
 import { version } from "../package.json";
-import {mainColor, dimColor, brightColor} from "./settings.taku.json";
+import { mainColor, dimColor, brightColor } from "./settings.taku.json";
 
 class takuCLI {
     // --- Main Section ---
@@ -57,9 +57,7 @@ class takuCLI {
             }
 
             this.client = new Client(this.auth, false, "");
-        } 
-        catch (error) {
-        }
+        } catch (error) {}
     }
 
     public async chat() {
@@ -71,7 +69,7 @@ class takuCLI {
         // replace this when there's channel support
         this.drawLog(`{${this.dimColor}-fg}Welcome ${this.username} to taku.cli ${version}\nYou're currently in @global`);
 
-        this.client.on("message", async ( message: IMessage ) => {
+        this.client.on("message", async (message: IMessage) => {
             await this.drawMessage(message);
         });
 
@@ -236,7 +234,7 @@ class takuCLI {
             bg: this.dimColor,
             focus: {
                 bg: this.mainColor,
-            }
+            },
         },
     });
 
