@@ -1,8 +1,6 @@
 // @ts-ignore
 import * as fetch from "node-fetch";
-import fs from "fs";
 import blessed from "blessed";
-import { timeStamp } from "console";
 import { Client, IMessage } from "taku.js";
 import { version } from "../package.json";
 import { mainColor, dimColor, brightColor } from "./settings.taku.json";
